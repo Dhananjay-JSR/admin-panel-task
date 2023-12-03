@@ -114,7 +114,7 @@ export function TableRendered({ FetchData }: { FetchData: DataType[] }) {
         MainID: false,
       },
     },
-    autoResetPageIndex: false,
+
     getPaginationRowModel: getPaginationRowModel(),
     getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setRowSelection,
