@@ -1,18 +1,17 @@
+
 import { useEffect, useState } from "react";
-
+import { TableRendered } from "./TableRendered";
+export interface DataType {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
 function App() {
-  interface DataType {
-    id:string,
-    name:string,
-    emai:string,
-    role:string
-  }
-  const [fetchedData, setFetchedData] = useState<DataType[]|null>(null);
 
+  const [fetchedData, setFetchedData] = useState<DataType[] | null>(null);
 
-
-
-// Data Fetching Login
+  // Data Fetching Login
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -24,18 +23,23 @@ function App() {
             signal: signal,
           }
         );
-        const data = await fetchRes.json() as DataType[];
+        const data = (await fetchRes.json()) as DataType[];
         setFetchedData(() => data);
       } catch (err) {
         if (err instanceof DOMException) {
           console.log("aborted");
         }
       }
-    })()
+    })();
     return () => {
       controller.abort();
     };
   }, []);
+
+
+
+
+
 
   if (fetchedData == null) {
     return (
@@ -43,13 +47,16 @@ function App() {
     );
   }
 
+ 
+   
+  
+
   return (
     <>
-      <pre>
-        <code>{JSON.stringify(fetchedData, null, 2)}</code>
-      </pre>
+      <TableRendered FetchData={fetchedData}/>
     </>
   );
+
 }
 
 export default App;
